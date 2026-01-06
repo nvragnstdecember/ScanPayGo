@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% set per_seat = (ticket.total_amount / ticket.quantity) if ticket.quantity else 0 %}
+
+<div class="page-section">
+  <h2 class="mb-3">Checkout</h2>
+
+  <div class="row g-4">
+
+    <!-- Trip Summary -->
+    <div class="col-md-7">
+      <div class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Trip Summary</h5>
+
+          <p class="small text-muted mb-2">
+            {{ ticket.operator }} • {{ ticket.bus_type }}
+          </p>
+
+          <div class="row small">
+            <div class="col-6">
+              <div class="text-muted">From</div>
+              <div class="fw-semibold">{{ ticket.from_city }}</div>
+              <div>{{ ticket.departure }}</div>
+            </div>
+            <div class="col-6">
+              <div class="text-muted">To</div>
+              <div class="fw-semibold">{{ ticket.to_city }}</div>
+              <div>{{ ticket.arrival }}</div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="small">
+            <div><strong>Passenger:</strong> {{ ticket.passenger_name }}</div>
+            <div><strong>Seats:</strong> {{ ticket.seat_numbers }}</div>
+            <div class="mt-2">
+              <strong>Fare per seat:</strong>
+              ₹{{ "%.2f"|format(per_seat) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Details -->
+    <div class="col-md-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Payment Details</h5>
+          <p class="small text-muted mb-2">
+            Simulated payment (no real money).
+          </p>
+
+          <dl class="row small mb-3">
+            <dt class="col-6">Seats</dt>
+            <dd class="col-6 text-end">{{ ticket.quantity }}</dd>
+
+            <dt class="col-6">Total Fare</dt>
+            <dd class="col-6 text-end">
+              ₹{{ "%.2f"|format(ticket.total_amount) }}
+            </dd>
+          </dl>
+
+          <!-- Normal payment button -->
+          <form method="post" class="mb-3">
+  <button type="submit" class="btn btn-success w-100">
+    Generate Ticket (wallet will be charged on scan)
+  </button>
+</form>
+          <hr class="my-3">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

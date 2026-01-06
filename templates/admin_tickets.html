@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">All Tickets</h2>
+    <a href="{{ url_for('admin') }}" class="btn btn-outline-secondary btn-sm">
+      ← Back to Dashboard
+    </a>
+  </div>
+
+  {% if tickets %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Passenger</th>
+                <th>Route</th>
+                <th>Departure</th>
+                <th>Seats</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Booked At</th>
+                <th>View</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tickets %}
+                <tr>
+                  <td class="small">{{ t.ticket_code }}</td>
+                  <td class="small">{{ t.passenger_name }}</td>
+                  <td class="small">{{ t.from_city }} → {{ t.to_city }}</td>
+                  <td class="small">{{ t.departure }}</td>
+                  <td class="small">{{ t.seat_numbers }}</td>
+                  <td class="small">₹{{ "%.2f"|format(t.total_amount) }}</td>
+                  <td class="small">
+                    {% if t.payment_status == "PAID" %}
+                      <span class="badge bg-success">PAID</span>
+                    {% else %}
+                      <span class="badge bg-warning">{{ t.payment_status }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="small">{{ t.booked_at }}</td>
+                  <td class="small">
+                    <a href="{{ url_for('ticket', ticket_code=t.ticket_code) }}"
+                       class="btn btn-sm btn-outline-primary">
+                      Ticket
+                    </a>
+                  </td>
+                  <td class="text-end">
+                    <form method="post"
+                          action="{{ url_for('admin_ticket_delete', ticket_id=t.id) }}"
+                          onsubmit="return confirm('Delete this ticket?');">
+                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                        Delete
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="alert alert-info mb-0">No tickets found.</div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

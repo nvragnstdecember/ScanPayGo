@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section" style="max-width: 720px; margin-inline: auto;">
+  <h2 class="mb-3 text-center">Pay using NFC (phone)</h2>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body text-center">
+
+      <p class="text-muted mb-3">
+        Scan this QR on your <strong>phone</strong> to open the payment page,
+        then tap "Pay with NFC" there.
+      </p>
+
+      <img
+        src="{{ url_for('static', filename=qr_filename) }}"
+        alt="NFC Payment QR"
+        class="img-fluid mb-3"
+        style="max-width: 260px;"
+      >
+
+      <p class="small text-muted mb-3">
+        Trip: <strong>{{ ticket.operator }}</strong><br>
+        {{ ticket.from_city }} → {{ ticket.to_city }} · {{ ticket.departure }}
+      </p>
+
+      <div id="status-box" class="alert alert-warning mb-0">
+        Waiting for payment from phone…
+      </div>
+
+      <div id="success-actions" class="mt-3 d-none">
+        <a id="ticket-link" href="#" class="btn btn-success btn-sm">Open ticket</a>
+        <a href="{{ url_for('bookings') }}" class="btn btn-outline-secondary btn-sm">
+          My bookings
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple polling loop: ask server every 2s if ticket is paid
+  const ticketId = {{ ticket.id }};
+  const statusBox = document.getElementById("status-box");
+  const successActions = document.getElementById("success-actions");
+  const ticketLink = document.getElementById("ticket-link");
+
+  async function checkStatus() {
+    try {
+      const resp = await fetch(`/api/payment_status/${ticketId}`);
+      if (!resp.ok) return;
+
+      const data = await resp.json();
+      if (data.paid) {
+        statusBox.classList.remove("alert-warning");
+        statusBox.classList.add("alert-success");
+        statusBox.textContent = "Payment successful! Ticket is now generated.";
+
+        ticketLink.href = `/ticket/${data.ticket_code}`;
+        successActions.classList.remove("d-none");
+
+        // stop polling
+        clearInterval(pollTimer);
+      }
+    } catch (e) {
+      // ignore for demo
+    }
+  }
+
+  const pollTimer = setInterval(checkStatus, 2000);
+</script>
+
+{% endblock %}

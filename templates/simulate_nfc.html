@@ -1,0 +1,398 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+/* ---------- GLOBAL FOR THIS PAGE ONLY ---------- */
+.nfc-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background orbs */
+.nfc-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.nfc-orb.one {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #ff7fd6 0%, #ff3d9a 30%, transparent 70%);
+  top: -80px;
+  left: -40px;
+  animation: orbFloat1 12s ease-in-out infinite alternate;
+}
+.nfc-orb.two {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #7f7fff 0%, #3d38ff 30%, transparent 70%);
+  bottom: -120px;
+  right: -80px;
+  animation: orbFloat2 14s ease-in-out infinite alternate;
+}
+.nfc-orb.three {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #00ffd5 0%, #00c0ff 35%, transparent 75%);
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.45;
+  animation: orbFloat3 18s ease-in-out infinite alternate;
+}
+
+@keyframes orbFloat1 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, 40px); }
+}
+@keyframes orbFloat2 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-40px, -30px); }
+}
+@keyframes orbFloat3 {
+  0% { transform: translate(-50%, 0); }
+  100% { transform: translate(-50%, -25px); }
+}
+
+/* ---------- MAIN CARD ---------- */
+.nfc-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  padding: 28px 26px 30px;
+  border-radius: 28px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(145deg, rgba(17, 17, 23, 0.84), rgba(11, 11, 18, 0.98));
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(255, 105, 190, 0.45);
+  color: #fff;
+}
+
+/* Header text */
+.nfc-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.nfc-subtitle {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- PHONE + WAVES ---------- */
+.nfc-stack {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* behind phone: concentric waves */
+.nfc-wave-ring {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  opacity: 0.0;
+  transform: scale(0.7);
+}
+.nfc-wave-ring.r1 {
+  width: 190px;
+  height: 190px;
+  animation: ringPulse 2.4s infinite ease-out;
+}
+.nfc-wave-ring.r2 {
+  width: 230px;
+  height: 230px;
+  animation: ringPulse 2.4s infinite ease-out 0.3s;
+}
+.nfc-wave-ring.r3 {
+  width: 270px;
+  height: 270px;
+  animation: ringPulse 2.4s infinite ease-out 0.6s;
+}
+
+@keyframes ringPulse {
+  0%   { opacity: 0.0; transform: scale(0.65); }
+  25%  { opacity: 0.7; transform: scale(0.9); }
+  100% { opacity: 0.0; transform: scale(1.1); }
+}
+
+/* THE PHONE */
+.nfc-phone {
+  position: relative;
+  width: 180px;
+  height: 320px;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #2c2c32, #15151b);
+  box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.04),
+      0 18px 40px rgba(0, 0, 0, 0.8),
+      0 0 60px rgba(255, 128, 200, 0.75);
+  overflow: hidden;
+}
+
+/* phone bezel top notch */
+.nfc-notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 18px;
+  border-radius: 999px;
+  background: #050509;
+}
+
+/* in-screen gradient */
+.nfc-screen-gradient {
+  position: absolute;
+  inset: 18px 12px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 30% 0%, #ff9df0, transparent 60%),
+              radial-gradient(circle at 80% 100%, #7f9dff, transparent 55%),
+              linear-gradient(180deg, #151520, #050507);
+}
+
+/* on-screen card */
+.nfc-screen-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 78px;
+  transform: translate(-50%, -50%);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff61b6, #ffc46b);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5);
+  animation: cardFloat 2.4s ease-in-out infinite alternate;
+}
+
+/* card details lines */
+.nfc-card-chip {
+  width: 26px;
+  height: 20px;
+  border-radius: 6px;
+  background: radial-gradient(circle at 0 0, #ffe9b0, #ffc66b);
+  margin: 10px 0 0 12px;
+}
+.nfc-card-line {
+  height: 4px;
+  margin: 6px 12px 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+}
+.nfc-card-line.tint {
+  width: 70%;
+}
+
+/* small Apple/Google style text */
+.nfc-pay-label {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* glowing NFC icon */
+.nfc-icon-pill {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffffff, #ffd4f6);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nfc-icon-pill svg {
+  width: 18px;
+  height: 18px;
+  fill: #ff4f9c;
+}
+
+/* card float animation */
+@keyframes cardFloat {
+  0%   { transform: translate(-50%, -52%) rotate(-3deg); }
+  100% { transform: translate(-50%, -46%) rotate(2deg); }
+}
+
+/* ---------- STATUS + META ---------- */
+
+#nfc-status {
+  margin-top: 18px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #ffe4f7;
+}
+
+#nfc-substatus {
+  margin-top: 4px;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* loader spinner */
+.nfc-loader {
+  margin: 24px auto 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  border: 4px solid rgba(255, 255, 255, 0.15);
+  border-top: 4px solid #ff8adf;
+  border-right: 4px solid #80ffec;
+  animation: spinLoader 0.9s linear infinite;
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+@keyframes spinLoader {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* success tick */
+.nfc-success-icon {
+  margin-top: 18px;
+  font-size: 2.3rem;
+  display: none;
+}
+
+/* fade + scale utilities */
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+.scale-in {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+</style>
+
+<div class="nfc-page">
+
+  <!-- background glow blobs -->
+  <div class="nfc-orb one"></div>
+  <div class="nfc-orb two"></div>
+  <div class="nfc-orb three"></div>
+
+  <div class="nfc-shell">
+    <div class="text-center">
+      <div class="d-inline-flex align-items-center gap-2 mb-1">
+        <span class="badge rounded-pill bg-light text-dark px-3 py-1" style="font-size: 0.7rem; letter-spacing: 0.14em;">
+          NFC PAYMENT DEMO
+        </span>
+      </div>
+      <div class="nfc-title">Tap to Pay</div>
+      <div class="nfc-subtitle">
+        Hold your phone near the reader to complete this ScanPayGo payment.
+      </div>
+    </div>
+
+    <div class="nfc-stack position-relative mt-4">
+      <!-- wave rings -->
+      <div class="nfc-wave-ring r1"></div>
+      <div class="nfc-wave-ring r2"></div>
+      <div class="nfc-wave-ring r3"></div>
+
+      <!-- phone -->
+      <div class="nfc-phone">
+        <div class="nfc-notch"></div>
+        <div class="nfc-screen-gradient"></div>
+
+        <div class="nfc-screen-card">
+          <div class="nfc-card-chip"></div>
+          <div class="nfc-card-line"></div>
+          <div class="nfc-card-line tint"></div>
+          <div class="nfc-pay-label">SCANPAYGO PAY</div>
+          <div class="nfc-icon-pill">
+            <!-- simple NFC icon as svg -->
+            <svg viewBox="0 0 24 24">
+              <path d="M7 4v16h3V8.5L14 11v9h3V9.5L10 4z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="nfc-status" class="text-center fade-in">
+      Waiting for phone…
+    </div>
+    <div id="nfc-substatus" class="text-center">
+      Bring the card / phone close to the NFC reader.
+    </div>
+
+    <div class="nfc-loader" id="nfc-loader"></div>
+
+    <div class="nfc-success-icon text-center" id="nfc-success">
+      ✅
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  Ultra-premium NFC simulation flow:
+  1) 0–2.2s: waiting
+  2) ~2.2s: phone detected
+  3) ~2.2–4.6s: processing spinner
+  4) ~4.6s: success tick, short pause
+  5) redirect to backend to finish payment + show ticket
+*/
+
+const statusEl = document.getElementById("nfc-status");
+const subStatusEl = document.getElementById("nfc-substatus");
+const loaderEl = document.getElementById("nfc-loader");
+const successEl = document.getElementById("nfc-success");
+
+setTimeout(() => {
+  statusEl.textContent = "Phone detected…";
+  subStatusEl.textContent = "Establishing secure NFC channel.";
+  loaderEl.style.opacity = 1;
+  loaderEl.classList.add("scale-in");
+}, 2200);
+
+setTimeout(() => {
+  statusEl.textContent = "Processing payment…";
+  subStatusEl.textContent = "Do not remove your phone.";
+}, 3600);
+
+setTimeout(() => {
+  loaderEl.style.opacity = 0;
+  successEl.style.display = "block";
+  successEl.classList.add("scale-in");
+  statusEl.textContent = "Payment approved";
+  subStatusEl.textContent = "Your ticket is being generated…";
+}, 4600);
+
+setTimeout(() => {
+  window.location.href = "{{ url_for('simulate_nfc_process', ticket_id=ticket_id) }}";
+}, 6400);
+</script>
+
+{% endblock %}

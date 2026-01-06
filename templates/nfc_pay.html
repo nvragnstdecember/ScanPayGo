@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section" style="max-width: 480px; margin-inline: auto;">
+  <h2 class="mb-3 text-center">Phone NFC Payment</h2>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body text-center">
+
+      <p class="text-muted mb-3">
+        This is the <strong>phone</strong> side of the NFC payment demo.
+      </p>
+
+      <div class="mb-3">
+        <div class="fw-semibold">{{ ticket.operator }}</div>
+        <div class="small text-muted">
+          {{ ticket.from_city }} → {{ ticket.to_city }}<br>
+          {{ ticket.departure }}
+        </div>
+        <div class="small mt-1">
+          Fare: ₹{{ "%.2f"|format(ticket.total_amount) }}
+        </div>
+      </div>
+
+      {% if paid %}
+        <div class="alert alert-success">
+          Payment successful! You can now board the bus.
+        </div>
+        <a href="{{ url_for('ticket', ticket_code=ticket.ticket_code) }}" class="btn btn-success w-100 mb-2">
+          View Ticket
+        </a>
+      {% else %}
+        <form method="post">
+          <button type="submit" class="btn btn-primary w-100 mb-2" style="padding-block: 0.9rem;">
+            Tap card / phone to pay (Simulated)
+          </button>
+        </form>
+        <div class="small text-muted">
+          In a real system this button would be triggered by an NFC tap.
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

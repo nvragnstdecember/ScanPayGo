@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="row align-items-center g-4">
+    <!-- LEFT: Text -->
+    <div class="col-lg-6">
+      <h1 class="hero-title">
+        India’s smart way<br>to book bus tickets.
+      </h1>
+      <p class="hero-subtitle">
+        Compare buses, pick your seats in real-time, pay securely and board
+        with a single QR code. No printouts, no chaos, just tap and go.
+      </p>
+
+      <ul class="hero-list">
+        <li><i class="bi bi-aspect-ratio me-1"></i> Live seat occupancy & smart seat map</li>
+        <li><i class="bi bi-qr-code-scan me-1"></i> Instant QR e-ticket for boarding</li>
+        <li><i class="bi bi-shield-check me-1"></i> Device-integrated scanner validation</li>
+      </ul>
+
+      <div class="hero-mini-note mt-3">
+        <span class="badge rounded-pill me-2 bg-soft-accent text-accent">
+        </span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Search card sitting on top of hero illustration -->
+    <div class="col-lg-6">
+      <div class="hero-visual-wrapper">
+        
+  
+
+        <div class="hero-search-card">
+          <div class="hero-search-header mb-3">
+            <span class="badge bg-soft-accent text-accent me-2">
+              <i class="bi bi-bus-front-fill me-1"></i> Bus Tickets
+            </span>
+            <span class="hero-search-title">Search buses</span>
+          </div>
+
+          <form method="post">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-4">
+                <label class="form-label">From</label>
+                <select class="form-select soft-select" name="from_city" required>
+                  <option value="">Select city</option>
+                  {% for c in cities %}
+                    <option value="{{ c }}">{{ c }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">To</label>
+                <select class="form-select soft-select" name="to_city" required>
+                  <option value="">Select city</option>
+                  {% for c in cities %}
+                    <option value="{{ c }}">{{ c }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Date of Journey</label>
+                <input type="date" name="travel_date" class="form-control" required>
+              </div>
+              <div class="col-12 mt-2">
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="bi bi-search me-1"></i> Search buses
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="hero-safe-text mt-2 small text-muted">
+            <i class="bi bi-lock-fill me-1"></i> No real payments – simulation only, perfect for demos.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY SCANPAYGO -->
+<section class="section-spacing">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon bg-soft-blue text-blue">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </div>
+        <h5 class="feature-title">Live seat view</h5>
+        <p class="feature-text">
+          Visual 2D seat map for each bus. Already booked, available and selected seats are clearly highlighted.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon bg-soft-green text-success">
+          <i class="bi bi-qr-code"></i>
+        </div>
+        <h5 class="feature-title">QR-based boarding</h5>
+        <p class="feature-text">
+          Each ticket generates a unique QR. Validate directly from the bus using your laptop camera + scanner app.
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <div class="feature-icon bg-soft-purple text-purple">
+          <i class="bi bi-bar-chart-line-fill"></i>
+        </div>
+        <h5 class="feature-title">Admin analytics</h5>
+        <p class="feature-text">
+          Admin dashboard shows occupancy, booked vs. available seats and revenue-ready data per bus.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-spacing pb-3">
+  <h5 class="section-heading mb-3">How ScanPayGo works</h5>
+  <div class="row g-4 how-steps">
+    <div class="col-md-4">
+      <div class="how-step">
+        <div class="step-number">1</div>
+        <h6>Search & choose bus</h6>
+        <p>Enter route and date, then pick a bus based on timing, type and live occupancy.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="how-step">
+        <div class="step-number">2</div>
+        <h6>Select seats & pay</h6>
+        <p>Select seats on an interactive layout, fill passenger details and complete simulated payment.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="how-step">
+        <div class="step-number">3</div>
+        <h6>Board with QR code</h6>
+        <p>Show the e-ticket QR on your phone. The bus scanner validates and shows seat + passenger instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

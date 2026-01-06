@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section">
+  <h2 class="mb-3">My Bookings (this browser)</h2>
+
+  {% if tickets %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Route</th>
+                <th>Departure</th>
+                <th>Seats</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tickets %}
+                <tr>
+                  <td class="small">{{ t.ticket_code }}</td>
+                  <td class="small">{{ t.from_city }} → {{ t.to_city }}</td>
+                  <td class="small">{{ t.departure }}</td>
+                  <td class="small">{{ t.seat_numbers }}</td>
+                  <td class="small">₹{{ "%.2f"|format(t.total_amount) }}</td>
+                  <td class="small">
+                    {% if t.payment_status == "PAID" %}
+                      <span class="badge bg-success">PAID</span>
+                    {% else %}
+                      <span class="badge bg-warning">PENDING</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="{{ url_for('ticket', ticket_code=t.ticket_code) }}"
+                       class="btn btn-sm btn-outline-primary">
+                      Ticket
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="alert alert-info mb-0">
+          No bookings found. Book from the <a href="{{ url_for('home') }}">Home</a> page.
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

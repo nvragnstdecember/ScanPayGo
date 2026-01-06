@@ -1,0 +1,755 @@
+/* =========================================================
+   ScanPayGo – Light RedBus-style theme
+   ========================================================= */
+
+:root {
+    --bg-page: #f3f4f6;
+    --bg-card: #ffffff;
+    --bg-card-soft: #f9fafb;
+
+    --border-subtle: #e5e7eb;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --text-soft: #4b5563;
+    --accent: #e11d48;
+    --accent-soft: #fb7185;
+    --accent-pill: #fee2e2;
+
+    --blue-soft: #e0f2fe;
+
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+
+    --purple: #7c3aed;
+
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+
+    --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+    --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                 "Segoe UI", sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-main { flex: 1 0 auto; }
+.app-footer { flex-shrink: 0; }
+
+/* ---------- Navbar ---------- */
+
+.app-navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding-block: 0.55rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 25% 25%, #fecaca, transparent 55%),
+        radial-gradient(circle at 70% 80%, #fb7185, #e11d48);
+    box-shadow:
+        0 0 0 2px #fee2e2,
+        0 10px 25px rgba(248, 113, 113, 0.55);
+}
+
+.brand-title {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 1.05rem;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.app-nav-link {
+    color: var(--text-soft) !important;
+    font-weight: 500;
+    padding-inline: 0.9rem !important;
+    position: relative;
+}
+
+.app-nav-link:hover {
+    color: var(--accent) !important;
+}
+
+.app-nav-link.active {
+    color: var(--accent) !important;
+}
+
+.app-nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--accent);
+}
+
+.live-pill {
+    border-radius: 999px;
+    background: #fef2f2;
+    color: var(--accent);
+    font-size: 0.78rem;
+}
+
+/* ---------- Footer ---------- */
+
+.app-footer {
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ---------- Flash alerts ---------- */
+
+.app-alert {
+    border-radius: 999px;
+    border: 1px solid #fee2e2;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding: 2.75rem 2.75rem 3rem;
+    border-radius: var(--radius-xl);
+    background:
+      linear-gradient(135deg, #f9fafb 0%, #fef2f2 40%, #dbeafe 100%);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 40% -40px -80px;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(239, 246, 255, 0.9), transparent 55%),
+      radial-gradient(circle at 100% 10%, rgba(254, 242, 242, 0.9), transparent 55%);
+    opacity: 0.9;
+    z-index: -1;
+}
+
+.hero-title {
+    font-size: clamp(2.4rem, 3vw + 1.4rem, 3.2rem);
+    line-height: 1.05;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.hero-subtitle {
+    margin-top: 0.9rem;
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    max-width: 30rem;
+}
+
+.hero-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1.1rem;
+}
+
+.hero-list li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.45rem;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+}
+
+.hero-list i {
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    color: var(--accent);
+}
+
+.hero-mini-note {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+}
+
+.bg-soft-accent {
+    background: var(--accent-pill) !important;
+}
+.text-accent { color: var(--accent) !important; }
+
+.hero-visual-wrapper {
+    position: relative;
+    min-height: 260px;
+}
+
+.hero-visual-img {
+    position: absolute;
+    inset: -40px 0 auto;
+    width: 100%;
+    max-width: 430px;
+    margin-inline: auto;
+    filter: drop-shadow(0 20px 45px rgba(15, 23, 42, 0.25));
+}
+
+.hero-search-card {
+    position: relative;
+    margin-top: 2.2rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.3rem 1.4rem 1.5rem;
+    border-radius: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-soft);
+    max-width: 500px;
+}
+
+.hero-search-header {
+    display: flex;
+    align-items: center;
+}
+
+.hero-search-title {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.hero-safe-text {
+    font-size: 0.78rem;
+}
+
+/* =========================================================
+   FORMS & BUTTONS
+   ========================================================= */
+
+.form-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.form-control,
+.form-select {
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    padding-inline: 1.2rem;
+    height: 3rem;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent-soft);
+    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.35);
+}
+
+/* Primary buttons */
+
+.btn-primary {
+    border-radius: 999px;
+    border: none;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    height: 3rem;
+}
+
+.btn-primary:hover {
+    background: #be123c;
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+}
+
+.btn-outline-primary {
+    border-radius: 999px;
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+/* =========================================================
+   GENERIC SECTIONS
+   ========================================================= */
+
+.section-spacing {
+    margin-bottom: 2.5rem;
+}
+
+.section-spacing-top {
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.section-heading {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Feature cards */
+
+.feature-card {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-card);
+    padding: 1.3rem 1.4rem;
+    height: 100%;
+}
+
+.feature-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.7rem;
+    font-size: 1.2rem;
+}
+
+.bg-soft-blue {
+    background: #eff6ff;
+}
+.bg-soft-green {
+    background: #ecfdf3;
+}
+.bg-soft-purple {
+    background: #f5f3ff;
+}
+.text-blue { color: #2563eb; }
+.text-purple { color: var(--purple); }
+
+.feature-title {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.feature-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* How it works */
+
+.how-steps h6 {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.how-step p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.step-number {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: #fee2e2;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+/* Page-section style used on some pages */
+
+.page-section {
+    margin-top: 1.8rem;
+    margin-bottom: 2.5rem;
+    padding: 2.25rem 2.5rem;
+    border-radius: var(--radius-xl);
+    background: #ffffff;
+    box-shadow: var(--shadow-soft);
+}
+
+.page-section h2 {
+    color: #111827;
+    font-weight: 600;
+}
+
+.page-section .card {
+    background: var(--bg-card-soft);
+    border-radius: var(--radius-lg);
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-card);
+}
+
+/* =========================================================
+   TABLES (Admin + My Bookings)
+   ========================================================= */
+
+.page-section table,
+.page-section table th,
+.page-section table td {
+    color: var(--text-main) !important;
+}
+
+.table thead th {
+    background: #f9fafb;
+    border-bottom-color: #e5e7eb;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted) !important;
+}
+
+.table tbody td {
+    border-top-color: #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.page-section table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+/* =========================================================
+   BUS CARDS (buses.html) – ULTRA ROUNDED
+   ========================================================= */
+
+.bus-card {
+    border-radius: 24px;                 /* smoother */
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-card);
+    padding: 1.4rem 1.6rem;
+    overflow: hidden;                    /* IMPORTANT: fixes weird edges */
+    transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        border-color 140ms ease;
+}
+
+.bus-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+    border-color: #fecaca;
+}
+
+.bus-card h5 {
+    font-weight: 600;
+    color: #111827;
+}
+
+.bus-card .price-chip {
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.32);
+}
+
+/* softer grey text helper */
+.text-soft {
+    color: var(--text-soft);
+}
+
+/* progress bar – rounded pill with hidden overflow */
+.bus-card .progress {
+    height: 6px;
+    background-color: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bus-card .progress-bar.bg-success { background-color: var(--success) !important; }
+.bus-card .progress-bar.bg-warning { background-color: var(--warning) !important; }
+.bus-card .progress-bar.bg-danger  { background-color: var(--danger) !important; }
+
+/* Select seats button – nice pill */
+.bus-card .btn-select-seats {
+    border-radius: 999px !important;
+    padding: 0.55rem 1.6rem;
+    background: linear-gradient(135deg, #f97373, #e11d48);
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 10px 24px rgba(225, 29, 72, 0.45);
+}
+
+.bus-card .btn-select-seats:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   SEAT SELECTION
+   ========================================================= */
+
+.seat-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    max-width: 360px;
+}
+
+.seat-btn {
+    width: 3rem;
+    min-width: 3rem;
+    border-radius: 14px;
+    border-width: 1px;
+    font-size: 0.8rem;
+    padding-block: 0.45rem;
+    cursor: pointer;
+}
+
+.seat-available {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+    color: #374151;
+}
+
+.seat-booked {
+    cursor: not-allowed;
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    color: #9ca3af;
+}
+
+.seat-selected {
+    color: #ffffff !important;
+    border-color: var(--accent) !important;
+    background: var(--accent) !important;
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.4);
+}
+
+/* Passenger panel boxes */
+#selected-seats-display,
+#fare-display {
+    background-color: #f9fafb;
+    color: var(--text-main);
+}
+
+/* =========================================================
+   TICKET PAGE
+   ========================================================= */
+
+.ticket-wrapper {
+    max-width: 1050px;
+    margin: 2.5rem auto;
+}
+
+.ticket-card {
+    border-radius: var(--radius-xl);
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--shadow-soft);
+    color: var(--text-main);
+}
+
+.ticket-title {
+    color: #111827;
+}
+
+.ticket-subtitle {
+    color: var(--text-muted);
+}
+
+.ticket-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                 "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.ticket-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.ticket-value {
+    color: #111827;
+    font-weight: 600;
+}
+
+.ticket-meta {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
+
+.ticket-field {
+    font-weight: 500;
+    color: #111827;
+}
+
+.ticket-divider {
+    border-color: #e5e7eb;
+}
+
+.ticket-qr-image {
+    max-width: 190px;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-card);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding: 2rem 1.6rem 2.4rem;
+        border-radius: 0;
+        margin-top: 1rem;
+    }
+
+    .hero-search-card {
+        margin-top: 1.2rem;
+        max-width: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .page-section {
+        padding: 1.5rem 1.25rem;
+        border-radius: 0;
+        margin-top: 1.25rem;
+    }
+
+    .bus-card {
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+    }
+}
+
+/* ---- Pink Input Theme ---- */
+.form-control,
+.form-select {
+    background: #ffe6ee !important;      /* soft pink background */
+    color: #4a002a !important;            /* dark pink text */
+    border: 2px solid #ff99bb !important; /* border */
+    border-radius: 12px !important;       /* smooth rounded shape */
+    padding: 10px 14px;
+    font-weight: 500;
+}
+
+/* On focus */
+.form-control:focus,
+.form-select:focus {
+    background: #ffd3e5 !important;
+    border-color: #ff5f9e !important;
+    box-shadow: 0 0 0 3px rgba(255, 95, 158, 0.25) !important;
+    color: #2a0018 !important;
+}
+
+/* Placeholder color */
+.form-control::placeholder {
+    color: #aa5f7f !important;
+}
+/* Pretty, rounded dropdown – but not crazy pink list */
+.soft-select {
+    border-radius: 14px !important;
+    padding: 8px 14px !important;
+    border: 1.5px solid #ff9db8 !important;
+    background: #ffe9f0 !important;
+    transition: 0.2s ease-in-out;
+}
+
+/* Focus glow */
+.soft-select:focus {
+    outline: none !important;
+    border-color: #ff4f7d !important;
+    box-shadow: 0 0 6px rgba(255, 90, 122, 0.4) !important;
+    background: #fff0f4 !important;
+}
+
+/* Dropdown options – keep them clean/white */
+.soft-select option {
+    background-color: #ffffff;
+    color: #333333;
+}
+/* Make the dropdown menu look rounded */
+.soft-select {
+    border-radius: 14px !important;
+    padding: 8px 14px !important;
+    border: 1.5px solid #ff9db8 !important;
+    background: #ffe9f0 !important;
+    appearance: none;              /* removes default OS styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+}
+
+/* Add a custom arrow so appearance:none won't remove the arrow */
+.soft-select::-ms-expand {
+    display: none;
+}
+
+.soft-select::after {
+    content: "▾";
+    font-size: 14px;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Style dropdown options */
+.soft-select option {
+    border-radius: 10px !important;
+    padding: 8px;
+    background: #ffe9f0;
+    border: none;
+}
+select {
+    background-color: #ffe9f0 !important; /* solid light pink */
+    border-radius: 10px;
+}
+
+select option {
+    background-color: #ffe9f0 !important; /* fixes the dropdown list */
+    color: #000;
+}

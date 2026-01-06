@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-center">
+  <div class="card shadow-lg" style="max-width: 900px; width: 100%;">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 class="mb-0">ScanPayGo E-ticket</h4>
+          <small class="text-muted">Show this at boarding</small>
+        </div>
+        <div class="text-end">
+          <div class="small">Ticket: {{ ticket.ticket_code }}</div>
+          {% if ticket.payment_status == "PAID" %}
+            <span class="badge bg-success">PAID</span>
+          {% else %}
+            <span class="badge bg-warning text-dark">PENDING (wallet will be charged on scan)</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-8">
+          <h5 class="mb-2">{{ ticket.operator }}</h5>
+          <p class="text-muted mb-3">{{ ticket.bus_type }}</p>
+
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <div class="small text-muted">From</div>
+              <div class="fw-semibold">{{ ticket.from_city }}</div>
+              <div class="small">{{ ticket.departure }}</div>
+            </div>
+            <div class="col-sm-6">
+              <div class="small text-muted">To</div>
+              <div class="fw-semibold">{{ ticket.to_city }}</div>
+              <div class="small">{{ ticket.arrival }}</div>
+            </div>
+          </div>
+
+          <div class="mb-3 small">
+            <div class="text-muted mb-1">Passenger</div>
+            <div>{{ ticket.passenger_name }}</div>
+            <div>{{ ticket.passenger_email }}</div>
+            <div>{{ ticket.passenger_phone }}</div>
+          </div>
+
+          <div class="mb-3 small">
+            <div class="text-muted mb-1">Seats</div>
+            {% for s in seats_list %}
+              <span class="badge bg-primary me-1 mb-1">Seat {{ s }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="mb-3 small">
+            <div class="text-muted mb-1">Fare</div>
+            <div>
+              ₹{{ "%.2f"|format(ticket.price) }} × {{ ticket.quantity }}
+              = <strong>₹{{ "%.2f"|format(ticket.total_amount) }}</strong>
+            </div>
+          </div>
+
+          <div class="small text-muted">
+            <div>Booked at: {{ ticket.booked_at }}</div>
+            <div>Payment ID: {{ ticket.payment_id or "Not paid yet" }}</div>
+          </div>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <div class="small text-muted mb-2">
+            Scan this QR at the bus to deduct fare from your wallet.
+          </div>
+          <img
+            src="{{ url_for('static', filename=qr_filename) }}"
+            alt="Ticket QR"
+            class="img-fluid mb-2"
+          >
+          <div class="small text-muted">
+            QR encodes this ticket's URL. Your scanner app will read the ticket code
+            and trigger wallet deduction.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

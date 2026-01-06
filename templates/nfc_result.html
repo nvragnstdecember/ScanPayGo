@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section" style="max-width: 520px; margin-inline: auto; margin-top: 2.5rem;">
+  <div class="card border-0 shadow-sm">
+    <div class="card-body text-center py-4">
+
+      {% if result.already_paid %}
+        <div class="mb-3">
+          <span class="badge rounded-pill bg-success px-3 py-2">
+            Ticket already paid
+          </span>
+        </div>
+        <h4 class="mb-2">NFC Tap Successful ✅</h4>
+        <p class="text-muted mb-4">
+          Ticket <strong>{{ result.ticket_code }}</strong> is already marked as <strong>PAID</strong>.
+        </p>
+      {% else %}
+        <div class="mb-3">
+          <span class="badge rounded-pill bg-primary px-3 py-2">
+            Payment completed
+          </span>
+        </div>
+        <h4 class="mb-2">NFC Tap Successful ✅</h4>
+        <p class="text-muted mb-1">
+          Ticket <strong>{{ result.ticket_code }}</strong> has been paid via simulated tap.
+        </p>
+        <p class="text-muted">
+          Payment ID: <strong>{{ result.payment_id }}</strong>
+        </p>
+      {% endif %}
+
+      {% if result.passenger %}
+        <hr>
+        <p class="small text-muted mb-1">
+          Passenger: <strong>{{ result.passenger }}</strong>
+        </p>
+        <p class="small text-muted mb-3">
+          Seats: <strong>{{ result.seat_numbers }}</strong>
+        </p>
+      {% endif %}
+
+      <a href="{{ url_for('bookings') }}" class="btn btn-outline-primary btn-sm">
+        View my bookings
+      </a>
+      <a href="{{ url_for('home') }}" class="btn btn-link btn-sm">
+        Back to home
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

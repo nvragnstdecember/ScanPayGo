@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section" style="max-width: 480px; margin-inline: auto; margin-top: 2.5rem;">
+  <h2 class="mb-3">Admin Login</h2>
+  <p class="text-muted small mb-4">
+    Use your admin credentials to access the ScanPayGo control panel.
+  </p>
+
+  <div class="card border-0">
+    <div class="card-body">
+      <form method="post" action="{{ url_for('admin_login') }}">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          Sign in as Admin
+        </button>
+      </form>
+      <p class="small text-muted mt-3 mb-0">
+        Demo credentials: <code>admin / admin123</code> (you can change these in <code>app.py</code>).
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

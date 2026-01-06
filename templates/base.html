@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ScanPayGo - Smart Bus Ticketing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons (for small icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    >
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg app-navbar">
+  <div class="container-xl">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home') }}">
+      <div class="brand-mark"></div>
+      <div class="d-flex flex-column lh-1">
+        <span class="brand-title">ScanPayGo</span>
+        <span class="brand-subtitle">Smart Bus Tickets</span>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-lg-center gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link app-nav-link {% if request.endpoint == 'home' %}active{% endif %}"
+             href="{{ url_for('home') }}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link app-nav-link {% if request.endpoint == 'admin' %}active{% endif %}"
+             href="{{ url_for('admin') }}">Admin</a>
+        </li>
+
+        <li class="nav-item d-none d-lg-block">
+          <span class="badge live-pill">
+            Live seat occupancy
+          </span>
+        </li>
+
+        {# --------- USER LOGGED IN --------- #}
+        {% if current_user %}
+          <!-- Wallet badge -->
+          <li class="nav-item ms-lg-3">
+            {% if wallet_balance is not none %}
+              <span class="badge bg-soft-primary text-primary ms-2">
+                💼 Wallet: ₹{{ "%.2f"|format(wallet_balance) }}
+              </span>
+            {% endif %}
+          </li>
+
+          <!-- User dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle app-nav-link" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>{{ current_user["name"] }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="{{ url_for('bookings') }}">
+                  My Bookings
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('logout') }}">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        {# --------- NOT LOGGED IN --------- #}
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link app-nav-link {% if request.endpoint == 'login' %}active{% endif %}"
+               href="{{ url_for('login') }}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link app-nav-link {% if request.endpoint == 'register' %}active{% endif %}"
+               href="{{ url_for('register') }}">Sign Up</a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="app-main py-4">
+  <div class="container-xl">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} app-alert alert-dismissible fade show">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+</main>
+
+<footer class="app-footer">
+  <div class="container-xl d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+    <span class="small text-muted">&copy; 2025 ScanPayGo. All rights reserved.</span>
+    <span class="small text-muted">Made for smart ticketing projects.</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

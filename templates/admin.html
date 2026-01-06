@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Admin Dashboard - Bus Occupancy</h2>
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('admin_tickets') }}" class="btn btn-outline-primary btn-sm">
+        View All Tickets
+      </a>
+      <a href="{{ url_for('admin_bus_new') }}" class="btn btn-primary btn-sm">
+        + Add Bus
+      </a>
+      <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-light btn-sm">
+        Logout
+      </a>
+    </div>
+  </div>
+
+  {% if buses %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Operator</th>
+                <th>Route</th>
+                <th>Departure</th>
+                <th>Type</th>
+                <th>Seats</th>
+                <th>Booked</th>
+                <th>Available</th>
+                <th>Occupancy</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for b in buses %}
+                <tr>
+                  <td class="small">{{ b.operator }}</td>
+                  <td class="small">{{ b.from_city }} → {{ b.to_city }}</td>
+                  <td class="small">{{ b.departure }}</td>
+                  <td class="small">{{ b.bus_type }}</td>
+                  <td class="small">{{ b.total_seats }}</td>
+                  <td class="small">{{ b.booked_seats }}</td>
+                  <td class="small">{{ b.available_seats }}</td>
+                  <td class="small">
+                    <div class="d-flex align-items-center">
+                      <div class="flex-grow-1 me-2">
+                        <div class="progress" style="height: 6px;">
+                          <div class="progress-bar
+                            {% if b.occupancy_percent < 60 %}bg-success
+                            {% elif b.occupancy_percent < 85 %}bg-warning
+                            {% else %}bg-danger{% endif %}"
+                            role="progressbar"
+                            style="width: {{ b.occupancy_percent }}%;">
+                          </div>
+                        </div>
+                      </div>
+                      <span>{{ b.occupancy_percent }}%</span>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <a href="{{ url_for('admin_bus_edit', bus_id=b.id) }}"
+                       class="btn btn-sm btn-outline-primary me-1">
+                      Edit
+                    </a>
+                    <form method="post"
+                          action="{{ url_for('admin_bus_delete', bus_id=b.id) }}"
+                          style="display:inline-block;"
+                          onsubmit="return confirm('Delete this bus?');">
+                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                        Delete
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="alert alert-info mb-0">No buses found.</div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

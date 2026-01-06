@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-3">Available buses</h2>
+
+<div class="d-flex flex-wrap gap-2 mb-3 small text-muted">
+  <div><strong>From:</strong> {{ from_city or "Any" }}</div>
+  <div><strong>To:</strong> {{ to_city or "Any" }}</div>
+  <div><strong>Date:</strong> {{ travel_date or "Any" }}</div>
+</div>
+
+{% if buses %}
+  <div class="row g-3">
+    {% for b in buses %}
+      <div class="col-md-6">
+        <!-- Rounded custom bus card (uses .bus-card from style.css) -->
+        <div class="bus-card h-100">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h5 class="mb-0">{{ b.operator }}</h5>
+              <small class="text-muted">{{ b.bus_type }}</small>
+            </div>
+            <div class="price-chip">
+              ₹{{ "%.2f"|format(b.price) }}/seat
+            </div>
+          </div>
+
+          <div class="row small mb-3">
+            <div class="col-6">
+              <div class="text-muted">Departure</div>
+              <div class="fw-semibold">{{ b.from_city }}</div>
+              <div>{{ b.departure }}</div>
+            </div>
+            <div class="col-6">
+              <div class="text-muted">Arrival</div>
+              <div class="fw-semibold">{{ b.to_city }}</div>
+              <div>{{ b.arrival }}</div>
+            </div>
+          </div>
+
+          <div class="small mb-1 text-soft">
+            <span>Total: {{ b.total_seats }}</span> ·
+            <span>Booked: {{ b.booked_seats }}</span> ·
+            <span>Available: {{ b.available_seats }}</span>
+          </div>
+
+          <div class="progress mb-1">
+            <div
+              class="progress-bar
+                {% if b.occupancy_percent < 60 %}bg-success
+                {% elif b.occupancy_percent < 85 %}bg-warning
+                {% else %}bg-danger{% endif %}"
+              role="progressbar"
+              style="width: {{ b.occupancy_percent }}%;"
+            ></div>
+          </div>
+          <div class="text-end small text-muted">
+            Occupancy: {{ b.occupancy_percent }}%
+          </div>
+
+          <div class="mt-3 text-end">
+            {% if b.available_seats > 0 %}
+              <!-- FIXED: use b.id instead of bus.id -->
+              <a href="{{ url_for('book', bus_id=b.id) }}" class="btn btn-select-seats">
+                Select seats
+              </a>
+            {% else %}
+              <span class="badge bg-danger">Bus full</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No buses found for that search.</div>
+{% endif %}
+
+{% endblock %}

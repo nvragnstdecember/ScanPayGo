@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg" style="max-width: 450px; width: 100%; border-radius: 20px;">
+        <div class="card-body p-4">
+
+            <h2 class="mb-4">Login</h2>
+
+            <form method="post">
+
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control soft-input mb-3">
+
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control soft-input mb-4">
+
+                <button class="btn btn-danger w-100 py-2 rounded-pill" type="submit">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{{ url_for('register') }}" class="text-decoration-none fw-semibold" 
+                   style="color:#e63946;">
+                    Create account
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

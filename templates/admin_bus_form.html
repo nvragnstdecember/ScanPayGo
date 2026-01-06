@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-section">
+  <h2 class="mb-3">
+    {% if mode == "edit" %}Edit Bus{% else %}Add New Bus{% endif %}
+  </h2>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <form method="post" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Operator</label>
+          <input type="text" name="operator"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.operator if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">From City</label>
+          <input type="text" name="from_city"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.from_city if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">To City</label>
+          <input type="text" name="to_city"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.to_city if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Departure (YYYY-MM-DD HH:MM)</label>
+          <input type="text" name="departure"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.departure if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Arrival (YYYY-MM-DD HH:MM)</label>
+          <input type="text" name="arrival"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.arrival if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Price per Seat (₹)</label>
+          <input type="number" step="0.01" min="0" name="price"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.price if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Total Seats</label>
+          <input type="number" min="1" name="total_seats"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.total_seats if bus else '' }}" required>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Bus Type</label>
+          <input type="text" name="bus_type"
+                 class="form-control bg-dark text-light"
+                 value="{{ bus.bus_type if bus else '' }}" required>
+        </div>
+
+        <div class="col-12 d-flex justify-content-between mt-3">
+          <a href="{{ url_for('admin') }}" class="btn btn-outline-secondary">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary">
+            {% if mode == "edit" %}Save Changes{% else %}Create Bus{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
